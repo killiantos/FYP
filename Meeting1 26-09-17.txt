@@ -1,0 +1,7 @@
+Had first meeting with Rem today
+We discussed what he and Vivek hoped for me to be able to achieve over the course of the project
+He discussed in detail and through the use of examples how the ASTRA programming language worked in terms of agents.
+It is not compulsory for me to code the project through ASTRA but Rem would like me to try and thats fine with me
+Rem also discussed the Sinbad project and how he wanted me to play around with it first before deciding how to procede
+Rem has asked me to try to gain a basic understanding of ASTRA and Sinbad for when we next meet in a week's time
+Vivek may also be present via Skype for this meeting.
