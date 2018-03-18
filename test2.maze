@@ -1,0 +1,5 @@
+generator=generator.DemoMaze
+robots=1
+robot0=robot.basic.MyRobotFactory|Robot 1|5,-7
+robot1=robot.basic.MyRobotFactory2|-7,5|Robot 2
+robot2=robot.basic.MyRobotFactory2|0,0|Robot 3

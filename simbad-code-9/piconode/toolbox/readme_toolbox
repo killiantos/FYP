@@ -1,0 +1,5 @@
+This "toolbox" package contains useful classes that are not directly dependent of other package (monitoring, 
+log, display, etc.). note: PicoEvo and PicoNode uses nearly the same package - two identical copies so that 
+each distrib are self-contained. Version and Dictionary classes are specific to each project.
+
+Please refer to the "tutorial" package for examples. 

@@ -1,0 +1,21 @@
+generations = 250
+initPopSize = 200;
+optimisationFlag = true # maximise
+selectionOperator = null
+EvaluationOperator.Individual = null;
+InitialisationOperator.Population = null
+InitialisationOperator.Individual = null
+InitialisationOperator.Element = null
+StatisticsOperator.Population = null
+logFilename=default.log
+
+mu = 20
+lambda = 180
+mupluslambda = true
+genomeSize = 512
+mutationRate = 0.04
+
+#Simbatch _simulator;
+#Evaluator_SimpleAvoiderRobot _robot;
+	
+	

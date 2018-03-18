@@ -1,0 +1,200 @@
+============================
+=== PicoNode             ===
+=== Developper's notes   ===
+============================
+
+This file is for dev purpose
+should not be distributed...
+
+See piconode.toolbox.Version
+for Version number.
+
+
+-------------------------------------------------------------------------------------------------------------------
+ 
+=== PicoNode package   
+=== latest modifications 2006/02/25
+    
+Version 1.99beta2 (20060225)  
+
+ * Created on 30 dec. 2004
+ * Author : bredeche(at)lri(point)fr
+ * Version: 1.99beta1 (200602151717)
+ * Status : beta/stable (undocumented)
+
+Description :
+ 		A simple, intuitive and easy-to-use neural network library with learning capabilities.
+ 		Include back-propagation learning algorithm with sigmoid logistic and hyperbolic tangent activation functions.
+ 		Implementation of feed-forward and recurrent architecture.
+ 		Useful for quick implementation, test and research and educational purpose.
+
+ Help : 
+ 		Refer to the piconode.tutorials packages for examples.
+
+
+------------------------
+
+**IdŽes**
+ - modularisation.
+ - memo : dans une methode, super() utilise quand meme les redefs du niveau d'appel (logique mais pas intuitif)
+
+**Etat**
+
+ - refonte  : [5+] - reorg.
+ - recurrent: [5+] - validation
+ - appr.rnn : [0] - ...? methode distribuŽe (efficace, cf. BP) ou centralisŽe (facile)?
+ - modules  : [2] - permettre stand-alone et non output. aritŽ pour connexion.
+
+**Breakpoint**
+
+
+200605260019 :
+ - kohonen : a priori terminŽe, renommage a faire, optim? bof... les deux etapes de l'appr. (fait)
+200603311551 :
+ - bp200603011802n (dans module.java) : cf. ci-dessous. 
+ - TODO : mettre en place au niveau Node un systeme qui donne les E/S de chaque Node (utile pour 
+          l'insertion d'un module dans un network) -- en gros, 
+          getInputArity() 			 ( un network compte ses inputs(-bias), pour un module c'est ad hoc)
+          getOutputArity()			 ( ... )
+          setInputValue(index,value) ( ad hoc )
+          getOutputValue(index)      ( ... )
+          getInputObjectAt(index)    ( dans la majorité des cas : return(this) )
+          getOutputObjectAt(index)   ( ...)
+          Les deux derniers etant pour faire des arcs -- ex.:
+          "Arc arc = new Arc( network.getOutputObjectAt(1), module.getInputObjectAt(4) );"
+          In fine, au niveau d'un "NeuralNetwork", cela signifie qu'on a deux moyens d'avoir
+          la sortie - (classique+"step(...)") et (nouvelle+"step()"-a ecrire)
+          => a voir : integration de ValueContainer dans NeuralNetwork et resolution par un module (doit etre recursive quelque soit le niveau)
+          BREAKPOINT : dans module.java (il faut ecrire les abstracts dans NeuralNetwork et en particulier inserer les ValueContainers)
+ - TODO : remplacer tous les appels affichage par des methodes venant du package toolbox
+200603011645 :
+ - BUG.: RecurrentNeuron.step [corrigé]
+ - BUG simbad : quand pause puis start, appel initBehavior a verifier si pause/pause pareil
+200602250932 :
+ - bp: prochain test - evoluer le xor temporel. [FAIT]
+200602241901 :
+ - RecNN.check() (R:fait)
+	 - RecurrentNeuron::checkNetwork() fonctionne MAIS incomplet (check prend pas les cycles.) (R.: corrigŽ)
+	 - permet les stand-alones neurons? (R.: non)
+	 ==> utilise un flag pour parcourir une fois tous les neurones accessibles depuis les inputs *puis* parcourirent la liste pour detecter
+	 ==> les stand-alones neurons. dans les RNN on ne les permet pas. Par contre, lors des reseaux en module, on les permettra (reprendre
+	 ==> le meme code init avec petite modification la dessus...?). flag a utiliser : _isNewValueBuffered (R.: corrigŽ)
+	 - actuellement, on permet les boucles sur input neuron... ce qui n'a pas de sens. tester ca a l'init? oui...(R.: corrigŽ)
+200602161856 :
+ - bp: je n'ai plus qu'a ecrire dans RecurrentNeuralNetwork : (1) init 
+200602151717 : 
+ - reprise code.
+
+------------------------
+
+**History (important steps)**
+
+20060526 : version 1.991.beta2 - Self-Organizing Map module
+20060224 : version 1.99beta2 - Recurrent NN
+20060215 : version 1.99beta1 - development restarted - first draft of "version 2"
+20050208 : version 0.99rc1 aka "version 1" - functional and reliable version. 
+           Used for several experiments during the year 2005 at I&A-TAO / INRIA Futurs - LRI, UniversitŽ Paris-Sud (France).
+           Used for educational purpose at the UniversitŽ Paris-Sud.
+           Used in conjonction with Simbad mobile robot simulator and ECJ, an Artificial Evolution Framework (by Sean Luke),
+           and PicoEvo, another Artificial Evolution Framework (joint project).
+20041231 : version 0.99beta
+20041230 : development started from scratch
+
+------------------------
+ 
+**Current Todo List (developper section)**
+
+20060526 :
+ - (???) : [Kohonen Map] essayer avec un monde torrique?
+ - (..!) : [Kohonen Map] step() a implementer pour etre "PicoNode-compliant".
+ - (..?) : [Kohonen Map] apprentissage en deux passes implicite actuellement - rendre explicite? (bof...)
+ - (...) : [Kohonen Map] (todo?) optimisation majeure en supprimant les objets KohonenOutputNeuron
+20060523
+ - (...) : implementer "steppable", pour contraindre l'ecriture de la methode step (neurons,...)
+20060224
+ - (...) : dans tutorial_4... : "// registering output node is not mandatory in the scope of recurrent NN" valable si pas de test non-registered output
+ - (..?) : autoriser les neurones non output de ne pas avoir de successeur? a priori ca n'a pas de sens... sauf cas modulaire genre boite statistique? ou sortie non declarŽe? en fait on s'en fiche de registerOutput en RNN...
+ - (..?) : dŽriver PicoNode.Node de PicoEvo.Node pour l'integrer a l'evolution?
+ - (...).: RNN.init() : interdit les boucles vers input node, interdit les stand-alones (non-input) neurons, vŽrifie l'appartenance au reseau de tous les neurones atteints par un input. gere les cycles. interdit les outputs non enregistrŽs.
+20060215
+ - (..!) : point de vue modulaire : comment enregistrer le placement topologique d'un module? Arc special?
+ - (...) : virer les parametres en statique dans les ActivationFunction
+ - (REL) : nommer les reseaux
+ - (REL) : normaliser les messages avec Display
+ - (REL) : les readme
+ - (..!).: calcul de recurrence dans un RNN
+ - (..?).: ActivationFunction -> Operator ?
+ - (...)?: distinguer une classe network et network avec neurones de biais (R: non. pour l'instant)
+ - (...).: une classe DerivativeActivationFunction ou une implementation Derivative
+ - (..!).: notion de node, derive vers module
+ - (???).: NeuralNetwork::makeCleanTargetValuesList ?? (R: utile pour backprop)
+ - (..!).: classes derivant de Node : FeedForwardNeuralNetwork, BackPropLearningFeedForwardNeuralNetwork, RecurrentNeuralNetwork, CPGmodule
+ - (..!).: methode node::computeOutput (R: step() )
+20050208 ("version 1")
+ - (REL) : build javadoc
+ - (...) : derivate InputNeuron and OutputNeuron from neurons (?) - motivated by backprop_computeErrorTerm*Neuron
+ - (...) : revise(?) PiecewiseLinearActivationFunction() and implement derivative for backprop
+ - (...).: check update weights values ([set|get]{Bias}ArcsWeightValues) -- useful for evolutionary purpose...
+ - (...).: connect with EGC evolutionary engine
+ - (...).: implement Nolfi's learning&evolution experiment within simbad 
+ - (...).: translate remaining french comments to english comments 
+ - (...).: enable default parameter initialization (currently : static data within Environment)
+ - (...).: enable the "do not modify during learning" on/off tag for arcs (useful for nolfi's anticipation NN where only part of the net weights are actually modified) 
+ - (...).: learn the sinus function (validation issue)
+ - (...).: implement a clean way to specify only learning target output neurons when learning
+ - (...).: switch from Vector to ArrayList (threadsafe doesn't matter)
+
+##LEGENDE##
+ (?)  : une question ouverte
+ (!)  : prioritaire et nécessaire
+ (REL): indispensable pour la version release
+ (UPG): a implémenter dans la prochaine version
+ (...): il faudra le faire
+ (..*): il faudra le faire et ca commence a etre urgent
+ (..?): il faudrait peut-etre le faire...?
+ a dot after "(xxx)" means "done".
+
+
+------------------------
+
+**Implementation notes**
+
+- Arcs are also registered in neuron's dendrites list but never used (future implementations)
+
+
+------------------------
+
+**Future Implementations**
+
+- allow loops in network
+- implement delayed signal propagation (N-length memory -- time cost on arcs)
+- weight decay, momentum term (=inertie?), optimal tolerance
+- integration with my neuralnet visualisation tool 
+
+
+------------------------
+ 
+**Coding convention for this project**
+
+ *		
+ * 		public class MyClass {
+ * 		
+ * 			private double _myClassData = 0;
+ * 			private boolean _myBooleanFlag = true;
+ * 			static public int _myStaticClassData = 5;
+ * 
+ * 			(...)
+ * 
+ *			public void actionForMyMethod( int __myMethodParameterValue )
+ * 			{
+ * 				this.actionMethodFromThisInstance();
+ * 				actionStaticMethodFromThisClass();
+ * 				for ( int i = 0 ; i != __myMethodParameterValue ; i ++ ) 
+ * 					this._myClassData += _myStaticClassData;
+ * 			}
+ * 
+ * 			public double getMyClassData () (...)
+ * 			public void setMyClassData ( double __value ) (...)
+ * 			public boolean isMyBoolean () { return ( _myBooleanFlag) }   // note the name convention exception for boolean accessing methods (replace "get" by "is" and omit "flag" string)
+ * 			public void setMyBooleanFlag () (...)
+ * 		}

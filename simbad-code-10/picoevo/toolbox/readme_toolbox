@@ -1,0 +1,2 @@
+This "toolbox" package contains useful classes that are not directly dependent of other package (monitoring, log, display, etc.)
+Please refer to the "tutorial" package for examples.

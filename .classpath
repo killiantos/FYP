@@ -2,13 +2,9 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="C:/Users/Killian/eclipse-workspace/FYP/simbad-1.4.jar">
-		<attributes>
-			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="C:/Users/Killian/Desktop/Computer science/Final year/Project/j3d-1_5_2-windows-amd64/j3d-jre/bin"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry kind="lib" path="lib/ext/j3dcore.jar"/>
 	<classpathentry kind="lib" path="lib/ext/j3dutils.jar"/>
 	<classpathentry kind="lib" path="lib/ext/vecmath.jar"/>
+	<classpathentry kind="lib" path="simbad-1.4.jar" sourcepath="C:/Users/killd/Final year/Project/simbad-test.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
