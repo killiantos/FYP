@@ -2,27 +2,28 @@ package robot.strategic;
 
 import javax.vecmath.Vector3d;
 
+import config.Robot;
 import robot.generic.GenericRobot;
 
 public class StrategicRobot extends GenericRobot {
+
+	private Strategy strategy;
 
 	public StrategicRobot(Vector3d arg0, String arg1) {
 		super(arg0, arg1);
 	}
 	
-	private Strategy strategy = new BasicStrategy();
-	
 	public void performBehavior() {
 		super.performBehavior();
 		
 		if(!events.isEmpty()) {
-			strategy.Strategize(this, events.poll());
+			strategy.strategize(this, events.poll());
 		}
 	}
 
-	public void setStrategy(BasicStrategy strategy) {
+	public void setStrategy(Strategy strategy, Robot robot) {
 		this.strategy = strategy;
-		strategy.initialize(this);
+		strategy.initialize(this, robot);
 	}
 
 }

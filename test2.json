@@ -1,0 +1,24 @@
+{
+	name : "Rems Static Maze",
+	maze : {
+		type : "static",
+		filename: "test.maze"
+	},
+	robots : [
+		{
+			name : "robot1",
+			factory : { 
+				generator : "StrategicRobotFactory"
+			},
+			location : { x : 0, y : 0 }
+		}, {
+			name : "robot2",
+			factory : { 
+				generator : "ASTRARobotFactory", 
+				config : [ "astra.MyRobot" ]
+			},
+			location : { x : 2, y: 2}
+		}
+	]
+	
+}

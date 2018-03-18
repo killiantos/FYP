@@ -1,11 +1,12 @@
 package robot.strategic;
 
+import config.Robot;
 import robot.generic.RobotEvent;
 
 public class BasicStrategy implements Strategy{
 
 	@Override
-	public void Strategize(StrategicRobot agent, RobotEvent event) {
+	public void strategize(StrategicRobot agent, RobotEvent event) {
 		if(event.getType().equals("FoundWall")) {
 			agent.setBehaviour("FollowWall");
 			System.out.println("Found Wall");
@@ -20,7 +21,7 @@ public class BasicStrategy implements Strategy{
 		} */
 	}
 
-	public void initialize(StrategicRobot agent) {
+	public void initialize(StrategicRobot agent, Robot robot) {
 		agent.setBehaviour("FindWall");
 	}
 	

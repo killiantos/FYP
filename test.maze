@@ -1,6 +1,0 @@
-generator=generator.DemoMaze
-robots=1
-robot0=robot.strategic.StrategicRobotFactory|Robot 2|5,7
-robo3=robot.basic.MyRobotFactory|Robot 3|5,7
-robot1=robot.basic.MyRobotFactory|Robot 1|9,7
-robot2=robot.strategic.StrategicRobotFactory|Robot 2|5,7

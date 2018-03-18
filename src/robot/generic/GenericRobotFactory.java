@@ -1,20 +1,20 @@
 package robot.generic;
 import javax.vecmath.Vector3d;
 
+import config.Robot;
 import core.MazeRobotFactory;
 import simbad.sim.Agent;
 import simbad.sim.RobotFactory;
 
 public class GenericRobotFactory implements MazeRobotFactory {
 
-	public Agent create(String[] configuration) {
-		String[] loc = configuration[2].split(",");
-		GenericRobot robot = new GenericRobot(new Vector3d(Integer.parseInt(loc[0]), 0, Integer.parseInt(loc[1])),configuration[1]);
-		robot.installSensor("sonar", RobotFactory.addSonarBeltSensor(robot, 8));
-		robot.installSensor("bumper", RobotFactory.addBumperBeltSensor(robot, 8));
-		robot.installBehaviour("FindWall", new FindWall());
-		robot.installBehaviour("FollowWall", new FollowWall());
-		robot.setBehaviour("FindWall");
-		return robot;
+	public Agent create(Robot robot) {
+		GenericRobot myRobot = new GenericRobot(new Vector3d(robot.location.x, 0, robot.location.y),robot.name);
+		myRobot.installSensor("sonar", RobotFactory.addSonarBeltSensor(myRobot, 8));
+		myRobot.installSensor("bumper", RobotFactory.addBumperBeltSensor(myRobot, 8));
+		myRobot.installBehaviour("FindWall", new FindWall());
+		myRobot.installBehaviour("FollowWall", new FollowWall());
+		myRobot.setBehaviour("FindWall");
+		return myRobot;
 	}
 }

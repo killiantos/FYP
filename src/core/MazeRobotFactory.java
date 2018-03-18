@@ -1,8 +1,7 @@
 package core;
-import javax.vecmath.Vector3d;
-
+import config.Robot;
 import simbad.sim.Agent;
 
 public interface MazeRobotFactory {
-	public Agent create(String[] configuration);
+	public Agent create(Robot robot);
 }

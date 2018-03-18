@@ -1,9 +1,10 @@
 package robot.strategic;
 
+import config.Robot;
 import robot.generic.RobotEvent;
 
 public interface Strategy {
 	
-	public void Strategize(StrategicRobot agent, RobotEvent event);
-	public void initialize(StrategicRobot agent);
+	public void strategize(StrategicRobot agent, RobotEvent event);
+	public void initialize(StrategicRobot agent, Robot robot);
 }

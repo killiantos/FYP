@@ -1,13 +1,13 @@
 package robot.basic;
 import javax.vecmath.Vector3d;
 
+import config.Robot;
 import core.MazeRobotFactory;
 import simbad.sim.Agent;
 
 public class MyRobotFactory implements MazeRobotFactory {
-
-	public Agent create(String[] configuration) {
-		String[] loc = configuration[2].split(",");
-		return new MyRobot(new Vector3d(Integer.parseInt(loc[0]), 0, Integer.parseInt(loc[1])),configuration[1]);
+	@Override
+	public Agent create(Robot robot) {
+		return new MyRobot(new Vector3d(robot.location.x, 0, robot.location.y), robot.name);
 	}
 }

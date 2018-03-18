@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="lib" path="lib/ext/j3dcore.jar"/>
 	<classpathentry kind="lib" path="lib/ext/j3dutils.jar"/>
 	<classpathentry kind="lib" path="lib/ext/vecmath.jar"/>
 	<classpathentry kind="lib" path="simbad-1.4.jar" sourcepath="C:/Users/killd/Final year/Project/simbad-test.jar"/>
+	<classpathentry kind="lib" path="gson-2.8.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
