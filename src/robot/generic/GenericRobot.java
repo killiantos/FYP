@@ -14,7 +14,6 @@ public class GenericRobot extends Agent {
 
 	public GenericRobot(Vector3d arg0, String arg1) {
 		super(arg0, arg1);
-		// TODO Auto-generated constructor stub
 	}
 	
 	private String behaviour;
@@ -38,25 +37,29 @@ public class GenericRobot extends Agent {
 	}
 	
 	public void performBehavior() {
-		collisionDetection();
-		executeBehaviour();
+		if (!collisionDetection()) {
+			executeBehaviour();
+		}
 	}
 	
-	protected void collisionDetection() {
+	protected boolean collisionDetection() {
 		if (collisionDetected()) {
 			// stop the robot
 			setTranslationalVelocity(0.6);
 			setRotationalVelocity(-1); // always turns left
 			System.out.println("hit");
 			events.add(new RobotEvent("Collision", null));
+			return true;
 		}
+		return false;
 	}
 	
 	protected void executeBehaviour() {
 		if(behaviour!=null){
 			if(behaviours.get(behaviour) == null) {
-				System.out.println(behaviour);
+				System.out.println("No such behaviour: " + behaviour);
 			}
+			System.out.println("executing: " +behaviour);
 			behaviours.get(behaviour).execute(this);
 		}
 	}

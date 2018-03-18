@@ -1,6 +1,5 @@
 package robot.generic;
 
-import simbad.sim.Agent;
 import simbad.sim.RangeSensorBelt;
 
 public class FollowWall implements RobotBehaviour {
@@ -12,11 +11,7 @@ public class FollowWall implements RobotBehaviour {
 		if (sonars == null)
 			throw new RuntimeException("No sonar installed");
 		
-		/*if (!sonars.oneHasHit()) {
-			agent.setRotationalVelocity(0);
-			agent.setTranslationalVelocity(0);
-			//agent.setBehaviour("FindWall");
-		}*/ else if(sonars.oneHasHit()){
+		if(sonars.oneHasHit()){
 			double left = sonars.getFrontLeftQuadrantMeasurement();
 			double right = sonars.getFrontRightQuadrantMeasurement();
 			double front = sonars.getFrontQuadrantMeasurement();

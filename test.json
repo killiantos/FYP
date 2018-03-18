@@ -3,12 +3,26 @@
 	maze : {
 		type : "dynamic",
 		size : { x : 100, y : 100 },
-		generator : "generator.DepthFirstGenerator",
+		generator : "generator.DemoMaze",
 		filename : "test.maze"
 	},
+	behaviours : [
+		{
+			name : "FindWall",
+			code : "robot.strategic.FindWall"
+		}, {
+			name : "FollowWall",
+			code : "robot.strategic.FollowWall"
+		}, {
+			name : "HitWall",
+			code : "robot.strategic.HitWall"
+		}
+	],
 	robots : [
 		{
 			name : "robot1",
+			sensors : [ "sonar", "bumper" ],
+			behaviours : [ "FindWall", "FollowWall" ],
 			factory : "robot.strategic.StrategicRobotFactory",
 			config : [ "robot.strategic.BasicStrategy" ],
 			location : { x : 0, y : 0 }
