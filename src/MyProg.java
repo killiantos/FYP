@@ -6,6 +6,6 @@ import simbad.gui.Simbad;
 public class MyProg {
     public static void main(String[] args) throws InstantiationException, IllegalAccessException, ClassNotFoundException, FileNotFoundException, IOException {
 //        Simbad frame = new Simbad(new MyEnv("test.maze") ,false);
-        Simbad frame = new Simbad(new MyEnv("test.json") ,false);
+        Simbad frame = new Simbad(new MyEnv("astra.json") ,false);
     }
 }

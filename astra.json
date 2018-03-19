@@ -1,0 +1,32 @@
+{
+	name : "Rems Funky Maze",
+	maze : {
+		type : "dynamic",
+		size : { x : 100, y : 100 },
+		generator : "generator.DemoMaze",
+		filename : "test.maze"
+	},
+	behaviours : [
+		{
+			name : "FindWall",
+			code : "astra.behaviour.FindWall"
+		}, {
+			name : "FollowWall",
+			code : "astra.behaviour.FollowWall"
+		}, {
+			name : "HitWall",
+			code : "astra.behaviour.HitWall"
+		}
+	],
+	robots : [
+		{
+			name : "robot1",
+			sensors : [ "sonar", "bumper" ],
+			behaviours : [ "FindWall", "FollowWall" ],
+			factory : "astra.robot.ASTRARobotFactory",
+			config : [ "astra.agents.Test" ],
+			location : { x : 0, y : 0 }
+		}
+	]
+	
+}

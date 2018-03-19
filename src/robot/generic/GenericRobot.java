@@ -47,7 +47,7 @@ public class GenericRobot extends Agent {
 			// stop the robot
 			setTranslationalVelocity(0.6);
 			setRotationalVelocity(-1); // always turns left
-			System.out.println("hit");
+//			System.out.println("hit");
 			events.add(new RobotEvent("Collision", null));
 			return true;
 		}
@@ -59,7 +59,7 @@ public class GenericRobot extends Agent {
 			if(behaviours.get(behaviour) == null) {
 				System.out.println("No such behaviour: " + behaviour);
 			}
-			System.out.println("executing: " +behaviour);
+//			System.out.println("executing: " +behaviour);
 			behaviours.get(behaviour).execute(this);
 		}
 	}

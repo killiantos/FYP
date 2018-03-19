@@ -1,4 +1,3 @@
-/core/
-/config/
+/astra/
 /robot/
-/generator/
+/HitWall.class

@@ -1,0 +1,19 @@
+package astra.agents;
+
+agent Test {
+	module Simbad simbad;
+	module Console C;
+	
+	rule +!start(astra.robot.ASTRARobot robot, list params) {
+		simbad.link(robot);
+		C.println("Started");
+		simbad.setBehaviour("FindWall");
+	}
+	
+	rule $simbad.event("FoundWall", list params) {
+		C.println("Found Wall");
+		funct f = simbad.getCoordinates();
+		C.println(f);
+		simbad.setBehaviour("FollowWall");
+	}
+}

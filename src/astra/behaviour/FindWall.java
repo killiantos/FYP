@@ -1,4 +1,4 @@
-package robot.strategic;
+package astra.behaviour;
 
 import robot.generic.GenericRobot;
 import robot.generic.RobotBehaviour;
@@ -29,14 +29,30 @@ public class FindWall implements RobotBehaviour {
 			}
 		}
 
-		else if (sonars.oneHasHit()) {	
-			agent.addEvent(new RobotEvent("FoundWall", null));
-			agent.setBehaviour(null);
+		else if (sonars.oneHasHit()) {
+			double left = sonars.getFrontLeftQuadrantMeasurement();
+			double right = sonars.getFrontRightQuadrantMeasurement();
+			double front = sonars.getFrontQuadrantMeasurement();
+
+			if (front - left > 0.3) {
+				// wall is on left, so turn towards it
+				agent.setTranslationalVelocity(0.3);
+				agent.setRotationalVelocity(1);
+			} else if (front - right > 0.3) {
+				agent.setTranslationalVelocity(0.3);
+				agent.setRotationalVelocity(-1);
+			} else if (front > 1.0) {
+				agent.setTranslationalVelocity(0.3);
+				agent.setRotationalVelocity(0);
+			}else {
+				agent.addEvent(new RobotEvent("FoundWall", null));
+				agent.setBehaviour(null);
+			}
 		}
 
 		else {
 			// progress at 0.5 m/s
-			agent.setTranslationalVelocity(0.5);
+			agent.setTranslationalVelocity(0.8);
 			// frequently change orientation
 
 			agent.setRotationalVelocity(Math.PI / 2 * (0.5 - Math.random()));

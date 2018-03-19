@@ -11,5 +11,8 @@
 	<classpathentry kind="lib" path="lib/ext/vecmath.jar"/>
 	<classpathentry kind="lib" path="simbad-1.4.jar" sourcepath="C:/Users/killd/Final year/Project/simbad-test.jar"/>
 	<classpathentry kind="lib" path="gson-2.8.2.jar"/>
+	<classpathentry kind="lib" path="astra.jar"/>
+	<classpathentry kind="lib" path="json-simple-1.1.1.jar"/>
+	<classpathentry kind="lib" path="astra-compiler.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
