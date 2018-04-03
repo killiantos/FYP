@@ -1,8 +1,9 @@
 package robot.strategic;
 
+import java.util.Map;
+
 import robot.generic.GenericRobot;
 import robot.generic.RobotBehaviour;
-import robot.generic.RobotEvent;
 import simbad.sim.RangeSensorBelt;
 
 public class FollowWall implements RobotBehaviour {
@@ -45,5 +46,11 @@ public class FollowWall implements RobotBehaviour {
 			System.out.println("rot vel: " + agent.getRotationalVelocity());
 			System.out.println("trans vel: " + agent.getTranslationalVelocity());
 		}
+	}
+
+	@Override
+	public void configure(Map<String, Object> config) {
+		// TODO Auto-generated method stub
+		
 	}
 }

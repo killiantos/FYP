@@ -1,0 +1,55 @@
+{
+	"name" : "Rems Funky Maze",
+	"maze" : {
+		"type" : "dynamic",
+		"size" : { "x" : 100, "y" : 100 },
+		"generator" : "generator.DemoMaze",
+		"filename" : "test.maze"
+	},
+	"behaviours" : [
+		{
+			"name" : "GoStraight",
+			"code" : "astra.behaviour.GoStraight"
+		}, {
+			"name" : "Orient",
+			"code" : "astra.behaviour.Orient"
+		}, {
+			"name" : "BackUp",
+			"code" : "astra.behaviour.BackUp"
+		}, {
+			"name" : "TurnRight",
+			"code" : "astra.behaviour.TurnRight"
+		}, {
+			"name" : "TurnLeft",
+			"code" : "astra.behaviour.TurnLeft"
+		}, {
+			"name" : "FindWall",
+			"code" : "astra.behaviour.FindWall"
+		}, {
+			"name" : "FollowWall",
+			"code" : "astra.behaviour.FollowWall"
+		}, {
+			"name" : "HitWall",
+			"code" : "astra.behaviour.HitWall"
+		}
+	],
+	"types" : [
+		{
+			"name" : "test-robot",
+			"sensors" : [ "sonar", "bumper" ],
+			"behaviours" : [ "Orient", "GoStraight", "TurnLeft", "TurnRight", "FollowWall" ],
+			"factory" : "astra.robot.ASTRARobotFactory",
+			"config" : [ "astra.agents.Test" ]
+		}
+	],
+	"instances" : {
+		"type" : "enumeration",
+		"list" : [
+			{
+				"name" : "robot1",
+				"type" : "test-robot",
+				"location" : { "x" : -9, "y" : -8 }
+			}
+		]
+	}
+}

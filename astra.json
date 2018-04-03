@@ -8,6 +8,21 @@
 	},
 	behaviours : [
 		{
+			name : "GoStraight",
+			code : "astra.behaviour.GoStraight"
+		}, {
+			name : "Orient",
+			code : "astra.behaviour.Orient"
+		}, {
+			name : "BackUp",
+			code : "astra.behaviour.BackUp"
+		}, {
+			name : "TurnRight",
+			code : "astra.behaviour.TurnRight"
+		}, {
+			name : "TurnLeft",
+			code : "astra.behaviour.TurnLeft"
+		}, {
 			name : "FindWall",
 			code : "astra.behaviour.FindWall"
 		}, {
@@ -22,10 +37,10 @@
 		{
 			name : "robot1",
 			sensors : [ "sonar", "bumper" ],
-			behaviours : [ "FindWall", "FollowWall" ],
+			behaviours : [ "Orient", "GoStraight", "TurnLeft", "TurnRight", "FollowWall" ],
 			factory : "astra.robot.ASTRARobotFactory",
 			config : [ "astra.agents.Test" ],
-			location : { x : 0, y : 0 }
+			location : { x : -9, y : -8 }
 		}
 	]
 	

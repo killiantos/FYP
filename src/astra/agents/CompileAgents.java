@@ -7,6 +7,7 @@ public class CompileAgents {
 
 	public static void main(String[] args) {
 		ASTRACompiler.compile("astra.agents.Test");
+		ASTRACompiler.compile("astra.agents.Main");
 	}
 
 }

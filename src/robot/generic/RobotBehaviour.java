@@ -1,7 +1,9 @@
 package robot.generic;
 
-import simbad.sim.Agent;
+import java.util.Map;
 
 public interface RobotBehaviour {
-		public void execute(GenericRobot agent);
+	public void configure(Map<String, Object> config);
+
+	public void execute(GenericRobot agent);
 }

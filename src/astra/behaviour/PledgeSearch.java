@@ -1,5 +1,7 @@
 package astra.behaviour;
 
+import java.util.Map;
+
 import robot.generic.GenericRobot;
 import robot.generic.RobotBehaviour;
 import robot.generic.RobotEvent;
@@ -38,5 +40,11 @@ public class PledgeSearch implements RobotBehaviour {
 				agent.setTranslationalVelocity(0.6);
 			}
 		}
+	}
+
+	@Override
+	public void configure(Map<String, Object> config) {
+		// TODO Auto-generated method stub
+		
 	}
 }

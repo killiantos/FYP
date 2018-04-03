@@ -2,18 +2,184 @@ package astra.agents;
 
 agent Test {
 	module Simbad simbad;
+	module Map map;
+	module Math M;
 	module Console C;
+	module System S;
+	
+	types core {
+		formula oriented(string);
+		formula turned(string);
+		formula location(int);
+		formula location(string, int);
+		formula at(int, string, string);
+		formula decision(int, string, string);
+	}
+	
+	types registration {
+		formula register();
+		formula position(double, double, string);
+		formula position(string, double, double, string);
+		formula registered(string);
+	}
 	
 	rule +!start(astra.robot.ASTRARobot robot, list params) {
 		simbad.link(robot);
 		C.println("Started");
-		simbad.setBehaviour("FindWall");
+		
+		send(subscribe, "main", register());
+		
+		// Get Orientation
+		!orient();
+		
+		// This is done after the initial orientation
+		// because the robot coordinates are not initialised
+		// until something is done to it.
+		!record_location("Start");
+		map.display();
+		
+		simbad.setBehaviour("GoStraight");
 	}
 	
-	rule $simbad.event("FoundWall", list params) {
-		C.println("Found Wall");
-		funct f = simbad.getCoordinates();
-		C.println(f);
-		simbad.setBehaviour("FollowWall");
+	rule @message(agree, string sender, register()) {
+		+registered(sender);
 	}
+	
+	/**
+	 * Core behaviour - when I stop going forwards / following a wall,
+	 * record the event in the map, choose another direction, and restart 
+	 * following the wall.
+	 */
+	rule $simbad.event("Stopped", list params) {
+		C.println("Stopped");
+		!record_location("Wall");
+		
+		!selectDirection(string direction);
+		C.println("Choosing: " +direction);
+		!turn(direction);
+		
+		string wall = "left";
+		if (direction == "Left") wall = "right";
+		
+		simbad.setBehaviour("FollowWall", [side(wall)]);
+	}
+	
+	/**
+	 * IF you lose contact with the wall, record the point that you
+	 * lost contact and keep on going straight.
+	 */
+	rule $simbad.event("LostWall", list params) {
+		C.println("LostWall: " + params);
+		
+		!record_location("LostWall");
+		
+		simbad.setBehaviour("GoStraight");
+	}
+	
+	/**
+	 * Choose a direction
+	 */
+	rule +!selectDirection(string direction) : location(int locId) {
+		if (~decision(locId, map.getOrientation(), "Right")) {
+			C.println("setting right"); 
+			direction = "Right";
+			+decision(locId, map.getOrientation(), "Right");
+		} else if (~decision(locId, map.getOrientation(), "Left")) {
+			C.println("setting left"); 
+			direction = "Left";
+			+decision(locId, map.getOrientation(), "Left");
+		} else if (M.randomInt() % 2 == 0) {
+			C.println("random right"); 
+			direction="Right";
+		} else {
+			C.println("random left"); 
+			direction="Left";
+		}
+	}
+	
+	rule +!orient() {
+		simbad.setBehaviour("Orient");
+		wait(oriented(string direction));
+		-oriented(direction);
+		map.setOrientation(direction);
+	}
+
+	rule +!turn(string direction) {
+		C.println("Turning: " + direction);
+		simbad.setBehaviour("Turn"+direction);
+		wait(turned(direction));
+		-turned(direction);
+		
+		!orient();
+	}
+	
+	rule +!record_location(string type) {
+		C.println("++++++++++++++++++++++++++++ " + type + " ++++++++++++++++++++++++++++");
+		simbad.getCoordinates(double x, double y);
+		int locId = map.findLocation(x, y, 0.3);
+		if (locId > -1) {
+			C.println("FOUND LOCATION: " + locId);
+			-+location(locId);
+			foreach (at(locId, string ori, string t)) {
+				C.println("ori="+ori+" / type="+t);
+			} 
+		} else {
+//			if (registered(string coordinator)) {
+//				send(inform, coordinator, position(x, y, type));
+//			}
+			
+			int loc;
+			if (location(int lid)) {
+				map.recordLocation(S.name(), lid, x, y, type, int l);
+				loc = l;
+			} else {
+				map.recordLocation(S.name(), -1, x, y, type, int l);
+				loc = l;
+			}
+
+			C.println("NEW LOCATION: " + loc);
+			-+location(loc);
+			+at(loc, map.getOrientation(), type); 
+		}
+	}
+	
+	/**
+	 * SHARING OF MAPS...
+	 * These rules handle the receipt of a message from the coordinator agent containing details of another robots location.
+	 */
+	rule @message(inform, string sender, position(string robot, double x, double y, string type)) : location(robot, int loc) {
+		map.recordLocation(robot, loc, x, y, type, int locId);
+		-+location(robot, locId);
+	}
+	
+	rule @message(inform, string sender, position(string robot, double x, double y, string type)) {
+		map.recordLocation(robot, -1, x, y, type, int locId);
+		-+location(robot, locId);
+	}
+
+	/**
+	 * LOW LEVEL BEHAVIOURS - LEAD TO ADOPTION OF BELIEFS THAT THE AGENT IS
+	 * WAITING FOR
+	 */		
+	rule $simbad.event("Collision", list params) {
+		C.println("We hit the wall!");
+	//	simbad.setBehaviour("BackUp");
+	}
+
+	rule $simbad.event("TurnedRight", list params) {
+		C.println("Turned Right");
+		+turned("Right");
+	}
+
+	rule $simbad.event("TurnedLeft", list params) {
+		C.println("Turned Left");
+		+turned("Left");
+	}
+
+	rule $simbad.event("Oriented", [string direction]) {
+		C.println("Oriented: " + direction);
+		+oriented(direction);
+	}
+
+
 }

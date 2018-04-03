@@ -1,5 +1,7 @@
 package robot.generic;
 
+import java.util.Map;
+
 import simbad.sim.RangeSensorBelt;
 
 public class FollowWall implements RobotBehaviour {
@@ -31,5 +33,11 @@ public class FollowWall implements RobotBehaviour {
 				System.out.println("right");
 			}
 		}
+	}
+
+	@Override
+	public void configure(Map<String, Object> config) {
+		// TODO Auto-generated method stub
+		
 	}
 }

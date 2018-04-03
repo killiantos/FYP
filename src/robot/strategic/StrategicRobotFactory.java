@@ -1,38 +1,20 @@
 package robot.strategic;
+import java.lang.reflect.InvocationTargetException;
+
 import javax.vecmath.Vector3d;
 
+import astra.robot.AbstractRobotFactory;
+import config.Instance;
 import config.Robot;
-import core.MazeRobotFactory;
-import core.MyEnv;
-import robot.generic.RobotBehaviour;
+import config.RobotType;
 import simbad.sim.Agent;
-import simbad.sim.RobotFactory;
 
-public class StrategicRobotFactory implements MazeRobotFactory {
+public class StrategicRobotFactory extends AbstractRobotFactory {
 
 	public Agent create(Robot robot) {
 		StrategicRobot myRobot = new StrategicRobot(new Vector3d(robot.location.x, 0, robot.location.y), robot.name);
-		for (String sensor : robot.sensors) {
-			if (sensor.equals("sonar")) {
-				myRobot.installSensor("sonar", RobotFactory.addSonarBeltSensor(myRobot, 8));
-			} else if (sensor.equals("bumper")) {
-				myRobot.installSensor("bumper", RobotFactory.addBumperBeltSensor(myRobot, 8));
-			} else if (sensor.equals("compass")) {
-				myRobot.installSensor("compass", RobotFactory.addLightSensor(myRobot));
-			}
-		}
 		
-		for (String behaviour : robot.behaviours) {
-			try {
-				myRobot.installBehaviour(behaviour, (RobotBehaviour) Class.forName(MyEnv.behaviours.get(behaviour)).newInstance());
-			} catch (InstantiationException e) {
-				e.printStackTrace();
-			} catch (IllegalAccessException e) {
-				e.printStackTrace();
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-			}
-		}
+		initialize(myRobot, robot);
 
 		try {
 			myRobot.setStrategy((Strategy) Class.forName(robot.config.get(0)).newInstance(), robot);
@@ -43,6 +25,39 @@ public class StrategicRobotFactory implements MazeRobotFactory {
 			e.printStackTrace();
 			return null;
 		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return myRobot;
+	}
+
+	@Override
+	public Agent create(RobotType type, Instance instance) {
+		StrategicRobot myRobot = new StrategicRobot(new Vector3d(instance.location.x, 0, instance.location.y), instance.name);
+		
+		initialize(myRobot, type);
+
+		try {
+			myRobot.setStrategy((Strategy) Class.forName(type.config.get(0)).getConstructor().newInstance(), type);
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+			return null;
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+			return null;
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			return null;
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+			return null;
+		} catch (InvocationTargetException e) {
+			e.printStackTrace();
+			return null;
+		} catch (NoSuchMethodException e) {
+			e.printStackTrace();
+			return null;
+		} catch (SecurityException e) {
 			e.printStackTrace();
 			return null;
 		}

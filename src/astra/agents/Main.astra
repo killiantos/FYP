@@ -1,0 +1,29 @@
+package astra.agents;
+
+agent Main {
+	module Simbad simbad;
+	
+	types registration {
+		formula registered(string);
+		formula register();
+		formula position(double, double, string);
+		formula position(string, double, double, string);
+	}
+	
+	rule +!main(list args) {
+		simbad.launch("astra2.json");
+	}
+	
+	rule @message(subscribe, string sender, register()) {
+		+registered(sender);
+		send(agree, sender, register());
+	}
+	
+	rule @message(inform, string sender, position(double x, double y, string type)) {
+		foreach (registered(string name)) {
+			if (name ~= sender) {
+				send(inform, name, position(sender, x, y, type));
+			}
+		}
+	}
+}		

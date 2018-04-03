@@ -48,7 +48,7 @@ public class GenericRobot extends Agent {
 			setTranslationalVelocity(0.6);
 			setRotationalVelocity(-1); // always turns left
 //			System.out.println("hit");
-			events.add(new RobotEvent("Collision", null));
+			addEvent(new RobotEvent("Collision", null));
 			return true;
 		}
 		return false;
@@ -66,8 +66,13 @@ public class GenericRobot extends Agent {
 
 	public void setBehaviour(String string) {
 		this.behaviour = string;
-		
 	}
+	
+	public void setBehaviour(String behaviour, Map<String, Object> config) {
+		this.behaviour = behaviour;
+		behaviours.get(behaviour).configure(config);
+	}
+	
 	public String getBehaviour() {
 		return behaviour;
 	}

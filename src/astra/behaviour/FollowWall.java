@@ -1,40 +1,51 @@
 package astra.behaviour;
 
 import robot.generic.GenericRobot;
-import robot.generic.RobotBehaviour;
 import robot.generic.RobotEvent;
 import simbad.sim.RangeSensorBelt;
 
-public class FollowWall implements RobotBehaviour {
-
+public class FollowWall extends AbstractBehaviour {
+	private boolean moving = false;
+	
+	public FollowWall() {
+		config.put("speed", 0.4);
+		config.put("stop", 0.4);
+		config.put("dist", 2.5);
+		config.put("side", "right");
+	}
+	
 	@Override
 	public void execute(GenericRobot agent) {
-		// reads the three front quadrants
 		RangeSensorBelt sonars = (RangeSensorBelt) agent.getSensor("sonar");
 		if (sonars == null)
 			throw new RuntimeException("No sonar installed");
 		
-		if (!sonars.oneHasHit()) {
-//			agent.setRotationalVelocity(0);
-//			agent.setTranslationalVelocity(0);
-			System.out.println("Lost Wall...");
-//			agent.addEvent(new RobotEvent("LostWall",null));
-		} else {
-			double left = sonars.getFrontLeftQuadrantMeasurement();
-			double right = sonars.getFrontRightQuadrantMeasurement();
-			double front = sonars.getFrontQuadrantMeasurement();
+//		double front = sonars.getFrontQuadrantMeasurement();
+		double front = Math.min(sonars.getMeasurement(0), Math.min(Math.cos(Math.PI/4)*sonars.getMeasurement(1), Math.cos(Math.PI/4)*sonars.getMeasurement(7)));
 
-			// if obstacle near
-			// if(sonars.hasHit(MyEnv.b1))
-			if ((front < 1.0) || (left < 1.0) || (right < 1.0)) {
-				agent.setRotationalVelocity(-1); // always turns left
-				agent.setTranslationalVelocity(0.2);
-			} else if ((front > 1.2) || (left > 1.2) || (right > 1.2)) {
-				agent.setRotationalVelocity(1);
-				agent.setTranslationalVelocity(0.2);
-			} else {
-				agent.setRotationalVelocity(0);
-			}
+		double left = sonars.getMeasurement(2);
+		double right = sonars.getMeasurement(6);
+		
+		if (front <= ((double) config.get("stop"))) {
+			moving = false;
+			agent.addEvent(new RobotEvent("Stopped", null));
+			agent.setBehaviour(null);
+			agent.setTranslationalVelocity(0);
+		} else if (config.get("side").equals("right") && (right > (double) config.get("dist"))) {
+			moving = false;
+			System.out.println("right: " + right);
+			agent.addEvent(new RobotEvent("LostWall", new Object[] {"right"}));
+			agent.setTranslationalVelocity(0);
+			agent.setBehaviour(null);
+		} else if (config.get("side").equals("left") && (left > (double) config.get("dist"))) {
+			moving = false;
+			agent.setTranslationalVelocity(0);
+			agent.addEvent(new RobotEvent("LostWall", new Object[] {"left"}));
+			agent.setBehaviour(null);
+		}else if (!moving) {
+			agent.setTranslationalVelocity((double) config.get("speed"));
+			agent.setRotationalVelocity(0);
+			moving = true;
 		}
 	}
 }

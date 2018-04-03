@@ -28,7 +28,6 @@ public class ASTRARobot extends GenericRobot {
 		agent.addEvent(new ASTRARobotEvent(
 				Primitive.newPrimitive(event.getType()),
 				list));
-//		events.add(event);
 	}
 	
 	public void setAgent(Agent agent) {

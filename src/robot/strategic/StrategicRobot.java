@@ -3,6 +3,7 @@ package robot.strategic;
 import javax.vecmath.Vector3d;
 
 import config.Robot;
+import config.RobotType;
 import robot.generic.GenericRobot;
 
 public class StrategicRobot extends GenericRobot {
@@ -21,9 +22,9 @@ public class StrategicRobot extends GenericRobot {
 		}
 	}
 
-	public void setStrategy(Strategy strategy, Robot robot) {
+	public void setStrategy(Strategy strategy, RobotType type) {
 		this.strategy = strategy;
-		strategy.initialize(this, robot);
+		strategy.initialize(this, type);
 	}
 
 }

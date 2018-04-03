@@ -1,5 +1,7 @@
 package robot.generic;
 
+import java.util.Map;
+
 import simbad.sim.RangeSensorBelt;
 
 public class FindWall implements RobotBehaviour {
@@ -25,6 +27,12 @@ public class FindWall implements RobotBehaviour {
 
 			}
 
+		
+	}
+
+	@Override
+	public void configure(Map<String, Object> config) {
+		// TODO Auto-generated method stub
 		
 	}
 }

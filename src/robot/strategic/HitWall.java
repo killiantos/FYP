@@ -1,5 +1,7 @@
 package robot.strategic;
 
+import java.util.Map;
+
 import robot.generic.GenericRobot;
 import robot.generic.RobotBehaviour;
 import robot.generic.RobotEvent;
@@ -36,6 +38,12 @@ public class HitWall implements RobotBehaviour {
 
 			}
 
+		
+	}
+
+	@Override
+	public void configure(Map<String, Object> config) {
+		// TODO Auto-generated method stub
 		
 	}
 }
