@@ -120,13 +120,10 @@ agent Test {
 		if (locId > -1) {
 			C.println("FOUND LOCATION: " + locId);
 			-+location(locId);
-			foreach (at(locId, string ori, string t)) {
-				C.println("ori="+ori+" / type="+t);
-			} 
 		} else {
-//			if (registered(string coordinator)) {
-//				send(inform, coordinator, position(x, y, type));
-//			}
+			if (registered(string coordinator)) {
+				send(inform, coordinator, position(x, y, type));
+			}
 			
 			int loc;
 			if (location(int lid)) {

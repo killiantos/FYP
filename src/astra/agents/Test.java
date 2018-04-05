@@ -711,7 +711,7 @@ public class Test extends ASTRAClass {
 			),
 			Predicate.TRUE,
 			new Block(
-				"astra.agents.Test", new int[] {107,40,135,5},
+				"astra.agents.Test", new int[] {107,40,132,5},
 				new Statement[] {
 					new ModuleCall("C",
 						"astra.agents.Test", new int[] {108,8,108,91},
@@ -757,7 +757,7 @@ public class Test extends ASTRAClass {
 					),
 					new Declaration(
 						new Variable(Type.INTEGER, "locId"),
-						"astra.agents.Test", new int[] {110,8,135,5},
+						"astra.agents.Test", new int[] {110,8,132,5},
 						new ModuleTerm("map", Type.INTEGER,
 							new Predicate("findLocation", new Term[] {
 								new Variable(Type.DOUBLE, "x"),
@@ -783,13 +783,13 @@ public class Test extends ASTRAClass {
 						)
 					),
 					new If(
-						"astra.agents.Test", new int[] {111,8,135,5},
+						"astra.agents.Test", new int[] {111,8,132,5},
 						new Comparison(">",
 							new Variable(Type.INTEGER, "locId"),
 							Primitive.newPrimitive(-1)
 						),
 						new Block(
-							"astra.agents.Test", new int[] {111,23,117,9},
+							"astra.agents.Test", new int[] {111,23,114,9},
 							new Statement[] {
 								new ModuleCall("C",
 									"astra.agents.Test", new int[] {112,12,112,49},
@@ -812,69 +812,50 @@ public class Test extends ASTRAClass {
 									}
 								),
 								new SpecialBeliefUpdate(
-									"astra.agents.Test", new int[] {113,12,117,9},
+									"astra.agents.Test", new int[] {113,12,114,9},
 									new Predicate("location", new Term[] {
 										new Variable(Type.INTEGER, "locId")
 									})
-								),
-								new ForEach(
-									"astra.agents.Test", new int[] {114,12,117,9},
-									new Predicate("at", new Term[] {
-										new Variable(Type.INTEGER, "locId"),
-										new Variable(Type.STRING, "ori",false),
-										new Variable(Type.STRING, "t",false)
-									}),
-									new Block(
-										"astra.agents.Test", new int[] {114,54,116,13},
-										new Statement[] {
-											new ModuleCall("C",
-												"astra.agents.Test", new int[] {115,16,115,50},
-												new Predicate("println", new Term[] {
-													Operator.newOperator('+',
-														Primitive.newPrimitive("ori="),
-														Operator.newOperator('+',
-															new Variable(Type.STRING, "ori"),
-															Operator.newOperator('+',
-																Primitive.newPrimitive(" / type="),
-																new Variable(Type.STRING, "t")
-															)
-														)
-													)
-												}),
-												new DefaultModuleCallAdaptor() {
-													public boolean inline() {
-														return true;
-													}
-
-													public boolean invoke(Intention intention, Predicate predicate) {
-														return ((astra.lang.Console) intention.getModule("astra.agents.Test","C")).println(
-															(java.lang.String) intention.evaluate(predicate.getTerm(0))
-														);
-													}
-												}
-											)
-										}
-									)
 								)
 							}
 						),
 						new Block(
-							"astra.agents.Test", new int[] {117,15,135,5},
+							"astra.agents.Test", new int[] {114,15,132,5},
 							new Statement[] {
+								new If(
+									"astra.agents.Test", new int[] {115,12,131,9},
+									new Predicate("registered", new Term[] {
+										new Variable(Type.STRING, "coordinator",false)
+									}),
+									new Block(
+										"astra.agents.Test", new int[] {115,48,117,13},
+										new Statement[] {
+											new Send("astra.agents.Test", new int[] {116,16,116,63},
+												new Performative("inform"),
+												new Variable(Type.STRING, "coordinator"),
+												new Predicate("position", new Term[] {
+													new Variable(Type.DOUBLE, "x"),
+													new Variable(Type.DOUBLE, "y"),
+													new Variable(Type.STRING, "type")
+												})
+											)
+										}
+									)
+								),
 								new Declaration(
 									new Variable(Type.INTEGER, "loc"),
-									"astra.agents.Test", new int[] {122,12,134,9}
+									"astra.agents.Test", new int[] {119,12,131,9}
 								),
 								new If(
-									"astra.agents.Test", new int[] {123,12,134,9},
+									"astra.agents.Test", new int[] {120,12,131,9},
 									new Predicate("location", new Term[] {
 										new Variable(Type.INTEGER, "lid",false)
 									}),
 									new Block(
-										"astra.agents.Test", new int[] {123,35,126,13},
+										"astra.agents.Test", new int[] {120,35,123,13},
 										new Statement[] {
 											new ModuleCall("map",
-												"astra.agents.Test", new int[] {124,16,124,68},
+												"astra.agents.Test", new int[] {121,16,121,68},
 												new Predicate("recordLocation", new Term[] {
 													new ModuleTerm("S", Type.STRING,
 														new Predicate("name", new Term[] {}),
@@ -914,16 +895,16 @@ public class Test extends ASTRAClass {
 											),
 											new Assignment(
 												new Variable(Type.INTEGER, "loc"),
-												"astra.agents.Test", new int[] {125,16,126,13},
+												"astra.agents.Test", new int[] {122,16,123,13},
 												new Variable(Type.INTEGER, "l")
 											)
 										}
 									),
 									new Block(
-										"astra.agents.Test", new int[] {126,19,134,9},
+										"astra.agents.Test", new int[] {123,19,131,9},
 										new Statement[] {
 											new ModuleCall("map",
-												"astra.agents.Test", new int[] {127,16,127,66},
+												"astra.agents.Test", new int[] {124,16,124,66},
 												new Predicate("recordLocation", new Term[] {
 													new ModuleTerm("S", Type.STRING,
 														new Predicate("name", new Term[] {}),
@@ -963,14 +944,14 @@ public class Test extends ASTRAClass {
 											),
 											new Assignment(
 												new Variable(Type.INTEGER, "loc"),
-												"astra.agents.Test", new int[] {128,16,129,13},
+												"astra.agents.Test", new int[] {125,16,126,13},
 												new Variable(Type.INTEGER, "l")
 											)
 										}
 									)
 								),
 								new ModuleCall("C",
-									"astra.agents.Test", new int[] {131,12,131,45},
+									"astra.agents.Test", new int[] {128,12,128,45},
 									new Predicate("println", new Term[] {
 										Operator.newOperator('+',
 											Primitive.newPrimitive("NEW LOCATION: "),
@@ -990,13 +971,13 @@ public class Test extends ASTRAClass {
 									}
 								),
 								new SpecialBeliefUpdate(
-									"astra.agents.Test", new int[] {132,12,134,9},
+									"astra.agents.Test", new int[] {129,12,131,9},
 									new Predicate("location", new Term[] {
 										new Variable(Type.INTEGER, "loc")
 									})
 								),
 								new BeliefUpdate('+',
-									"astra.agents.Test", new int[] {133,12,134,9},
+									"astra.agents.Test", new int[] {130,12,131,9},
 									new Predicate("at", new Term[] {
 										new Variable(Type.INTEGER, "loc"),
 										new ModuleTerm("map", Type.STRING,
@@ -1022,7 +1003,7 @@ public class Test extends ASTRAClass {
 			)
 		));
 		addRule(new Rule(
-			"astra.agents.Test", new int[] {138,9,138,126},
+			"astra.agents.Test", new int[] {135,9,135,126},
 			new MessageEvent(
 				new Performative("inform"),
 				new Variable(Type.STRING, "sender",false),
@@ -1038,10 +1019,10 @@ public class Test extends ASTRAClass {
 				new Variable(Type.INTEGER, "loc",false)
 			}),
 			new Block(
-				"astra.agents.Test", new int[] {138,125,141,5},
+				"astra.agents.Test", new int[] {135,125,138,5},
 				new Statement[] {
 					new ModuleCall("map",
-						"astra.agents.Test", new int[] {139,8,139,61},
+						"astra.agents.Test", new int[] {136,8,136,61},
 						new Predicate("recordLocation", new Term[] {
 							new Variable(Type.STRING, "robot"),
 							new Variable(Type.INTEGER, "loc"),
@@ -1068,7 +1049,7 @@ public class Test extends ASTRAClass {
 						}
 					),
 					new SpecialBeliefUpdate(
-						"astra.agents.Test", new int[] {140,8,141,5},
+						"astra.agents.Test", new int[] {137,8,138,5},
 						new Predicate("location", new Term[] {
 							new Variable(Type.STRING, "robot"),
 							new Variable(Type.INTEGER, "locId")
@@ -1078,7 +1059,7 @@ public class Test extends ASTRAClass {
 			)
 		));
 		addRule(new Rule(
-			"astra.agents.Test", new int[] {143,9,143,99},
+			"astra.agents.Test", new int[] {140,9,140,99},
 			new MessageEvent(
 				new Performative("inform"),
 				new Variable(Type.STRING, "sender",false),
@@ -1091,10 +1072,10 @@ public class Test extends ASTRAClass {
 			),
 			Predicate.TRUE,
 			new Block(
-				"astra.agents.Test", new int[] {143,98,146,5},
+				"astra.agents.Test", new int[] {140,98,143,5},
 				new Statement[] {
 					new ModuleCall("map",
-						"astra.agents.Test", new int[] {144,8,144,59},
+						"astra.agents.Test", new int[] {141,8,141,59},
 						new Predicate("recordLocation", new Term[] {
 							new Variable(Type.STRING, "robot"),
 							Primitive.newPrimitive(-1),
@@ -1121,7 +1102,7 @@ public class Test extends ASTRAClass {
 						}
 					),
 					new SpecialBeliefUpdate(
-						"astra.agents.Test", new int[] {145,8,146,5},
+						"astra.agents.Test", new int[] {142,8,143,5},
 						new Predicate("location", new Term[] {
 							new Variable(Type.STRING, "robot"),
 							new Variable(Type.INTEGER, "locId")
@@ -1131,7 +1112,7 @@ public class Test extends ASTRAClass {
 			)
 		));
 		addRule(new Rule(
-			"astra.agents.Test", new int[] {149,9,149,50},
+			"astra.agents.Test", new int[] {146,9,146,50},
 			new ModuleEvent("simbad",
 				"$re",
 				new Predicate("event", new Term[] {
@@ -1149,10 +1130,10 @@ public class Test extends ASTRAClass {
 			),
 			Predicate.TRUE,
 			new Block(
-				"astra.agents.Test", new int[] {149,49,152,5},
+				"astra.agents.Test", new int[] {146,49,149,5},
 				new Statement[] {
 					new ModuleCall("C",
-						"astra.agents.Test", new int[] {150,8,150,37},
+						"astra.agents.Test", new int[] {147,8,147,37},
 						new Predicate("println", new Term[] {
 							Primitive.newPrimitive("We hit the wall!")
 						}),
@@ -1172,7 +1153,7 @@ public class Test extends ASTRAClass {
 			)
 		));
 		addRule(new Rule(
-			"astra.agents.Test", new int[] {154,9,154,52},
+			"astra.agents.Test", new int[] {151,9,151,52},
 			new ModuleEvent("simbad",
 				"$re",
 				new Predicate("event", new Term[] {
@@ -1190,10 +1171,10 @@ public class Test extends ASTRAClass {
 			),
 			Predicate.TRUE,
 			new Block(
-				"astra.agents.Test", new int[] {154,51,157,5},
+				"astra.agents.Test", new int[] {151,51,154,5},
 				new Statement[] {
 					new ModuleCall("C",
-						"astra.agents.Test", new int[] {155,8,155,33},
+						"astra.agents.Test", new int[] {152,8,152,33},
 						new Predicate("println", new Term[] {
 							Primitive.newPrimitive("Turned Right")
 						}),
@@ -1210,7 +1191,7 @@ public class Test extends ASTRAClass {
 						}
 					),
 					new BeliefUpdate('+',
-						"astra.agents.Test", new int[] {156,8,157,5},
+						"astra.agents.Test", new int[] {153,8,154,5},
 						new Predicate("turned", new Term[] {
 							Primitive.newPrimitive("Right")
 						})
@@ -1219,7 +1200,7 @@ public class Test extends ASTRAClass {
 			)
 		));
 		addRule(new Rule(
-			"astra.agents.Test", new int[] {159,9,159,51},
+			"astra.agents.Test", new int[] {156,9,156,51},
 			new ModuleEvent("simbad",
 				"$re",
 				new Predicate("event", new Term[] {
@@ -1237,10 +1218,10 @@ public class Test extends ASTRAClass {
 			),
 			Predicate.TRUE,
 			new Block(
-				"astra.agents.Test", new int[] {159,50,162,5},
+				"astra.agents.Test", new int[] {156,50,159,5},
 				new Statement[] {
 					new ModuleCall("C",
-						"astra.agents.Test", new int[] {160,8,160,32},
+						"astra.agents.Test", new int[] {157,8,157,32},
 						new Predicate("println", new Term[] {
 							Primitive.newPrimitive("Turned Left")
 						}),
@@ -1257,7 +1238,7 @@ public class Test extends ASTRAClass {
 						}
 					),
 					new BeliefUpdate('+',
-						"astra.agents.Test", new int[] {161,8,162,5},
+						"astra.agents.Test", new int[] {158,8,159,5},
 						new Predicate("turned", new Term[] {
 							Primitive.newPrimitive("Left")
 						})
@@ -1266,7 +1247,7 @@ public class Test extends ASTRAClass {
 			)
 		));
 		addRule(new Rule(
-			"astra.agents.Test", new int[] {164,9,164,56},
+			"astra.agents.Test", new int[] {161,9,161,56},
 			new ModuleEvent("simbad",
 				"$re",
 				new Predicate("event", new Term[] {
@@ -1286,10 +1267,10 @@ public class Test extends ASTRAClass {
 			),
 			Predicate.TRUE,
 			new Block(
-				"astra.agents.Test", new int[] {164,55,167,5},
+				"astra.agents.Test", new int[] {161,55,164,5},
 				new Statement[] {
 					new ModuleCall("C",
-						"astra.agents.Test", new int[] {165,8,165,43},
+						"astra.agents.Test", new int[] {162,8,162,43},
 						new Predicate("println", new Term[] {
 							Operator.newOperator('+',
 								Primitive.newPrimitive("Oriented: "),
@@ -1309,7 +1290,7 @@ public class Test extends ASTRAClass {
 						}
 					),
 					new BeliefUpdate('+',
-						"astra.agents.Test", new int[] {166,8,167,5},
+						"astra.agents.Test", new int[] {163,8,164,5},
 						new Predicate("oriented", new Term[] {
 							new Variable(Type.STRING, "direction")
 						})

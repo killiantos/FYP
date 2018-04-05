@@ -59,6 +59,14 @@ public class Simbad extends Module {
 	}
 
 	@ACTION
+	public boolean setVelocity(double translation, double rotation) {
+		if (robot == null) throw new RuntimeException("Agent is not linked to a robot");
+		robot.setTranslationalVelocity(translation);
+		robot.setRotationalVelocity(rotation);
+		return true;
+	}
+
+	@ACTION
 	public boolean setBehaviour(String behaviour, ListTerm config) {
 		if (robot == null) throw new RuntimeException("Agent is not linked to a robot");
 		

@@ -1,0 +1,22 @@
+package astra.agents;
+
+agent Test2 {
+	module Simbad simbad;
+	
+	rule +!start(astra.robot.ASTRARobot robot, list params) {
+		simbad.link(robot);
+		simbad.setBehaviour("FindWall");
+	}
+	
+	rule $simbad.event("FoundWall", list params) {
+		simbad.setBehaviour("FollowWall");
+	}
+	
+	rule $simbad.event("LostWall", list params) {
+		simbad.setBehaviour("FindWall");
+	}
+	
+	rule $simbad.event("Collision", list params) {
+		simbad.setVelocity(6.0, -1.0);
+	}
+}

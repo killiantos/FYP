@@ -40,7 +40,7 @@ public class MyEnv extends EnvironmentDescription {
 			}
 			
 			if (config.instances.type.equals("enumeration")) {
-				for (Instance instance : config.instances.enumeration) {
+				for (Instance instance : config.instances.list) {
 					RobotType type = types.get(instance.type);
 					if (type == null) throw new RuntimeException("No such robot type: " + instance.type); 
 					add(((MazeRobotFactory) Class.forName(type.factory).getConstructor().newInstance()).create(type, instance));

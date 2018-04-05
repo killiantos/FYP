@@ -33,9 +33,9 @@ public class Main extends ASTRAClass {
 				"astra.agents.Main", new int[] {13,27,15,5},
 				new Statement[] {
 					new ModuleCall("simbad",
-						"astra.agents.Main", new int[] {14,8,14,35},
+						"astra.agents.Main", new int[] {14,8,14,36},
 						new Predicate("launch", new Term[] {
-							Primitive.newPrimitive("astra.json")
+							Primitive.newPrimitive("astra2.json")
 						}),
 						new DefaultModuleCallAdaptor() {
 							public boolean inline() {
